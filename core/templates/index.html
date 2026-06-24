@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Produto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #0D1117; --surface: #161B22; --card: #1E2430; --border: #30363D;
+            --blue: #4F8EF7; --blue-h: #3A75DC; --green: #2ECC71;
+            --text: #E6EDF3; --muted: #7D8590; --radius: 10px;
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+        header {
+            background: var(--surface); border-bottom: 1px solid var(--border);
+            padding: 0 24px; height: 60px; display: flex; align-items: center;
+            justify-content: space-between; position: sticky; top: 0; z-index: 100;
+        }
+        header h1 { font-size: 17px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); display: inline-block; box-shadow: 0 0 6px var(--green); }
+        main { display: flex; justify-content: center; padding: 40px 24px; }
+        .painel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; width: 100%; max-width: 480px; }
+        .painel-title { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+        .painel-sub { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+        .divider { border: none; border-top: 1px solid var(--border); margin: 0 0 20px; }
+        .campo { margin-bottom: 16px; }
+        .campo label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 6px; }
+        .campo input, .campo select {
+            width: 100%; height: 42px; padding: 0 14px;
+            background: var(--card); border: 1.5px solid var(--border);
+            border-radius: 8px; color: var(--text); font-size: 14px; font-family: inherit;
+            transition: border-color .2s; outline: none;
+        }
+        .campo input:focus, .campo select:focus { border-color: var(--blue); }
+        .campo select option { background: var(--card); }
+        .btn { width: 100%; height: 44px; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; font-family: inherit; cursor: pointer; background: var(--blue); color: #fff; margin-top: 8px; }
+        .btn:hover { background: var(--blue-h); }
+        .mensagem { background: rgba(46,204,113,.15); border: 1px solid var(--green); border-radius: 8px; padding: 12px 16px; font-size: 13px; color: var(--green); margin-bottom: 20px; }
+        .nav-link { background: var(--card); border: 1.5px solid var(--border); color: var(--text); padding: 6px 16px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 600; }
+        .nav-link:hover { border-color: var(--blue); color: var(--blue); }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1><span class="dot"></span> Cadastro de Produtos</h1>
+    <a href="http://127.0.0.1:8000/vendedores/" class="nav-link">👤 Cadastro de Vendedores</a>
+</header>
+
+<main>
+    <div class="painel">
+        <p class="painel-title">Novo Produto</p>
+        <p class="painel-sub">Preencha os dados para cadastrar</p>
+        <hr class="divider"/>
+
+        {% if mensagem %}
+            <div class="mensagem">✓ {{ mensagem }}</div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="campo">
+                <label>Nome do Produto</label>
+                <input type="text" name="nome_produto" placeholder="Ex: Whey Protein" required/>
+            </div>
+            <div class="campo">
+                <label>Data de Cadastro</label>
+                <input type="date" name="data_cadastro"/>
+            </div>
+            <div class="campo">
+                <label>Categoria</label>
+                <select name="categoria">
+                    <option value="termogenicos">Termogênicos</option>
+                    <option value="proteicos">Proteicos</option>
+                    <option value="vitaminas">Vitaminas</option>
+                </select>
+            </div>
+            <button type="submit" class="btn">Cadastrar Produto</button>
+        </form>
+    </div>
+</main>
+
+</body>
+</html>
